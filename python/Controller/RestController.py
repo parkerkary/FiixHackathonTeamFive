@@ -1,8 +1,6 @@
-from flask import {
-    Flask,
-    request
-}
+from flask import Flask,request
 from Scraper.WebScraper import WebScraper
+
 app = Flask(__name__)
 
 
@@ -11,7 +9,6 @@ def getConfidence():
     content = request.json
     tfData = callTensorFlow(content)
     return 1
-
 
 def callTensorFlow(content):
     print(content)
