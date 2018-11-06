@@ -23,6 +23,7 @@ def callTensorFlow(content):
         obj = {}
         obj["name"] = Cars[x]
         obj["confidence"] = j["data"][x]
+        obj["models"] = models[Cars[x]]
         out.append(obj)
     return json.dumps(out)
     
