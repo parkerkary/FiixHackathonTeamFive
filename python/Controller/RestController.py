@@ -4,7 +4,7 @@ import random
 from Scraper.WebScraper import WebScraper
 import json
 import numpy as np
-
+from agents import Collector
 app = Flask(__name__)
 sageMakerAddress = "http://127.0.0.1:5000/mock-sage-maker"
 
@@ -45,8 +45,7 @@ def getResults():
     out = { "data": [x/_sum for x in randoms]}
     return json.dumps(out)
 
-@app.route('/recommend', method=["POST"])
+@app.route('/recommend', methods=["POST"])
 def getRecommendations():
-    assetCategoryID = request.__getattribute__("assetCategoryID")
-    collector = Collector()
-    return json.dumps(collector.collect(assetCategoryID))
+    collector = Collector.Collector()
+    return json.dumps(collector.collect(1))
