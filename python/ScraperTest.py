@@ -1,4 +1,5 @@
 from Scraper.WebScraper import WebScraper
+import sys
 cars = [
     "Dodge Ram", "Ford F150", "Chevy Silverado", "Tesla Model S",
     "Honda Civic", "Toyota Carolla", "Honda Odyssey", "Dodge Caravan",
@@ -16,7 +17,13 @@ def test():
     return out
 
 if __name__ == "__main__":
-    if(test()):
-        print("Webscraper Test Passed")
-    else:
-        print("Webscraper Test Failed")
+    name = ""
+    for x in range(len(sys.argv)-1):
+        name  = name + sys.argv[x+1] + " "
+    print(name)
+    ws = WebScraper(name)
+    print(ws.webpage)
+    # if(test()):
+    #     print("Webscraper Test Passed")
+    # else:
+    #     print("Webscraper Test Failed")
