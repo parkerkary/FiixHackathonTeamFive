@@ -1,7 +1,7 @@
 from Sorter import *
 
 ## The path of the folder that contains all of the image files
-imageFolder = "~/pwd/"
+imageFolder = "../assets/images/"
 ## the path of the file containing the labels
 labelFile = "../assets/labels.txt"
 
