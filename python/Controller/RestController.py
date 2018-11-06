@@ -2,15 +2,16 @@ from flask import Flask, request
 import requests
 import random
 from Scraper.WebScraper import WebScraper
+from model import models
 import json
 import numpy as np
 from agents import Collector
 app = Flask(__name__)
 sageMakerAddress = "http://127.0.0.1:5000/mock-sage-maker"
 
-# Mock
-mockCars = [str(x) for x in range(190)]
-
+Cars = models.keys()
+numCars = len(Cars)
+print(Cars)
 
 def callTensorFlow(content):
     r = requests.post(sageMakerAddress,data=content)
@@ -20,7 +21,7 @@ def callTensorFlow(content):
     out = []
     for x in largest:
         obj = {}
-        obj["name"] = mockCars[x]
+        obj["name"] = Cars[x]
         obj["confidence"] = j["data"][x]
         out.append(obj)
     return json.dumps(out)
@@ -40,7 +41,7 @@ def getConfidence():
 # Mock
 @app.route('/mock-sage-maker', methods=["POST"])
 def getResults():
-    randoms = [random.randint(0,100) for x in range(190)]
+    randoms = [random.randint(0,100) for x in range(numCars)]
     _sum = float(sum(randoms))
     out = { "data": [x/_sum for x in randoms]}
     return json.dumps(out)
