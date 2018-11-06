@@ -44,3 +44,9 @@ def getResults():
     _sum = float(sum(randoms))
     out = { "data": [x/_sum for x in randoms]}
     return json.dumps(out)
+
+@app.route('/recommend', method=["POST"])
+def getRecommendations():
+    assetCategoryID = request.__getattribute__("assetCategoryID")
+    collector = Collector()
+    return json.dumps(collector.collect(assetCategoryID))
