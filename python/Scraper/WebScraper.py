@@ -15,7 +15,7 @@ def isVisible(element):
         return False
     elif re.match('<!--.*-->', str(element.encode('utf-8'))):
         return False
-    if(element == "\n"):
+    if (element == "\n"):
         return False
     return True
 
@@ -25,38 +25,27 @@ def cleanLink(link):
     link = link.split(".htm")
     return link[0] + ".htm"
 
+
 def extractWords(sentence):
-    if(sentence == "\n"):
+    if (sentence == "\n"):
         return False
     else:
         return sentence.split()
 
 
 class WebScraper:
-    # urls: List<string>
-
-    keywords = [
-        "Maintenance", "Scheduled", "Schedule", "Service", "Check", "Inspect",
-        "Tighten", "Complete", "Replace", "Test", "Rotate", "Set", "Reset",
-        "Engine", "Oil", "Brake", "Tire", "Fuel", "Transmission"
-    ]
-
-    text_elements = ["div", "p", "td", "tr", "th", "span", ""]
-
     def __init__(self, vehicleName):
         print("initialized")
         self.vehicleName = vehicleName
         self.urls = self.rmGoogle(vehicleName, 5)
-        self.filterUrls()
-        for x in self.urls:
-            print x
-        # self.scores = self.getScores()
-        # self.webpage = self.getMostValid()
+        self.goodUrls = self.filterUrls()
+        self.scores = [x["score"] for x in self.goodUrls]
+        self.webpage = self.goodUrls[self.scores.index(max(self.scores))]["url"]
 
     def google(self, searchQuery, count):
         page = requests.get("https://www.google.com/search?q=" + searchQuery)
         soup = BeautifulSoup(page.content, "lxml")
-        result_divs = soup.findAll('div', {'class': 'g'})[:count+1]
+        result_divs = soup.findAll('div', {'class': 'g'})[:count + 1]
         links = [div.find('a') for div in result_divs]
         removeNones(links)
         hrefs = [cleanLink(link.get('href')) for link in links]
@@ -67,28 +56,47 @@ class WebScraper:
         searchString = "+".join(searchQuery.split())
         return self.google(searchString, count)
 
-    def filterUrls(self):
-        names = self.vehicleName.split()
-
-    def getWords(self, url):
-        html = requests.get(url)
+    def getTitle(self, url):
+        try:
+            html = requests.get(url)
+        except:
+            return ""
         soup = BeautifulSoup(html.content, "lxml")
-        data = soup.findAll(text=True)
-        result = filter(isVisible, data)
-        superResult = []
-        for x in result:
-            superResult += [word.lower() for word in x.split()]
-        return superResult
+        if(soup.title):
+            return soup.title.string
+        else:
+            return ""
 
-    def getScores(self):
-        output = []
+    def getH1(self, url):
+        try:
+            html = requests.get(url)
+        except:
+            return []
+        soup = BeautifulSoup(html.content, "lxml")
+        headers = soup.find_all("h1")
+        headText = [x.text.strip() for x in headers]
+        return headText
+
+    def makeURlObj(self, url):
+        urlDict = {}
+        urlDict["url"] = url
+        urlDict["title"] = self.getTitle(url)
+        urlDict["headers"] = self.getH1(url)
+        return urlDict
+
+    def filterUrls(self):
+        urlObjs = []
         for url in self.urls:
-            count = 0
-            words = self.getWords(url)
-            for keyword in self.keywords:
-                count+= words.count(keyword.lower())
-            output.append(count)
-        return output
-
-    def getMostValid(self):
-        return self.urls[self.scores.index(max(self.scores))]
+            if "auto123" in url:
+                self.urls.remove(url)
+            else:
+                urlDict = self.makeURlObj(url)
+                urlDict["score"] = 0
+                for word in self.vehicleName.split():
+                    if (word in url or word in urlDict["title"]):
+                        urlDict["score"] += 1
+                    for header in urlDict['headers']:
+                        if (word in header):
+                            urlDict["score"] += 1
+                urlObjs.append(urlDict)
+        return urlObjs

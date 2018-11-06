@@ -15,7 +15,6 @@ class FileSorter:
             labelDir = self.mkdir(labelDir)
             currentPath = self.imageFolder + self.padNumber(lineNumber) + ".jpg"
             newPath = labelDir[:-2] + "/" + self.padNumber(lineNumber) + ".jpg"
-            print(currentPath,newPath)
             os.rename(currentPath,newPath)
         fp.close()
     
@@ -28,7 +27,6 @@ class FileSorter:
             return False
 
     def mkdir(self,filepath):
-        print(self.checkDirExists(filepath))
         if(not self.checkDirExists(filepath)):
             os.mkdir(filepath)
         return filepath
