@@ -10,7 +10,6 @@ Click==7.0
 configparser==3.5.0
 ecdsa==0.13
 enum34==1.1.6
-esptool==2.5.1
 Flask==1.0.2
 future==0.16.0
 futures==3.2.0
@@ -65,16 +64,12 @@ pyobjc-framework-Social==2.5.1
 pyobjc-framework-SyncServices==2.5.1
 pyobjc-framework-SystemConfiguration==2.5.1
 pyobjc-framework-WebKit==2.5.1
-pyOpenSSL==0.13.1
 pyparsing==2.0.1
-pyserial==3.4
 python-dateutil==1.5
 pytz==2013.7
 PyYAML==3.13
 requests==2.20.0
 rope==0.11.0
-scipy==0.13.0b1
-serial==0.0.69
 singledispatch==3.4.0.3
 six==1.4.1
 urllib3==1.24.1
