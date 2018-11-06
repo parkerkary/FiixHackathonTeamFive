@@ -22,8 +22,16 @@ def isVisible(element):
 
 def cleanLink(link):
     link = link[7:]
-    link = link.split(".htm")
-    return link[0] + ".htm"
+    splitChar = "&"
+    if ".html" in link:
+        splitChar = ".html"
+    elif ".htm" in link:
+        splitChar = ".htm"
+    link = link.split(splitChar)
+    if(splitChar == "&"):
+        return link[0]
+    else:
+        return link[0] + splitChar
 
 
 def extractWords(sentence):
@@ -73,7 +81,7 @@ class WebScraper:
         except:
             return []
         soup = BeautifulSoup(html.content, "lxml")
-        headers = soup.find_all("h1")
+        headers = soup.find_all("h1", limit=6)
         headText = [x.text.strip() for x in headers]
         return headText
 

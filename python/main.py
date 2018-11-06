@@ -1,4 +1,6 @@
+import sys
 from Scraper.WebScraper import WebScraper
+
 cars = [
     "Dodge Ram", "Ford F150", "Chevy Silverado", "Tesla Model S",
     "Honda Civic", "Toyota Carolla", "Honda Odyssey", "Dodge Caravan",
@@ -7,9 +9,9 @@ cars = [
 
 
 if __name__ == "__main__":
-    print("Welcom to the Main Method\n")
-    ws = WebScraper("Jeep Cherokee")
+    name = ""
+    for x in range(len(sys.argv)-1):
+        name += sys.argv[x+1] + " " 
+    print "scraping for " + name
+    ws = WebScraper(name)
     print(ws.webpage)
-    # for x in cars:
-    #     ws = WebScraper(x)
-    #     print(ws.webpage)
