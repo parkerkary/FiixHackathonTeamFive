@@ -2,18 +2,21 @@ import os
 
 class FileSorter:
 
-    imageFolder = ""
-    labelFile = ""
-
-    def __init__(self):
+    def __init__(self, imageFolder, labelFile):
         print("Initializing Sorter")
+        self.imageFolder = imageFolder
+        self.labelFile = labelFile
 
     def sort(self):
         fp = open(self.labelFile)
         for i, lineValue in enumerate(fp):
             lineNumber = i + 1
-            print(self.padNumber(lineNumber))
-            print(lineValue)
+            labelDir = self.imageFolder + str(lineValue) + "/"
+            labelDir = self.mkdir(labelDir)
+            currentPath = self.imageFolder + self.padNumber(lineNumber) + ".jpg"
+            newPath = labelDir + self.padNumber(lineNumber) + ".jpg"
+            os.rename(currentPath,newPath)
+        fp.close()
     
     def checkDirExists(self,filepath):
         try:
@@ -25,9 +28,10 @@ class FileSorter:
     def mkdir(self,filepath):
         if(not self.checkDirExists(filepath)):
             os.mkdir(filepath)
+        return filepath
 
     def padNumber(self,number):
         numStr = str(number)
-        while(len(numStr) < 4):
+        while(len(numStr) < 6):
             numStr = "0" + numStr
         return numStr
