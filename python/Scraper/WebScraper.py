@@ -43,7 +43,6 @@ def extractWords(sentence):
 
 class WebScraper:
     def __init__(self, vehicleName):
-        print("initialized")
         self.vehicleName = vehicleName
         self.urls = self.rmGoogle(vehicleName, 5)
         self.goodUrls = self.filterUrls()
