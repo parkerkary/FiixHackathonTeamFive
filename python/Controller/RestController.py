@@ -12,23 +12,15 @@ from Scraper.WebScraper import WebScraper
 
 app = Flask(__name__)
 
-def callTensorFlow(filename):
-    out = image_predict(filename)
-    return json.dumps(out)
-    
-
-def getLink(carName):
-    ws = WebScraper(carName)
-    return ws.webpage
-
-
 @app.route('/call-tensor-flow', methods=["POST"])
 def getConfidence():
-    content = request.json
-    tfData = callTensorFlow(content["filename"])
-    return str(tfData)
+    filename  = request.json["filename"]
+    tfData = image_predict(filename)
+    out = json.dumps(tfData)
+    return str(out)
 
-@app.route('/recommend/<carName>', methods=["POST"])
-def getRecommendations(carName):
+@app.route('/recommend', methods=["POST"])
+def getRecommendations():
+    carName = request.json["carname"]
     collector = Collector.Collector(carName)
     return json.dumps(collector.collect(carName))
