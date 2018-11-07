@@ -38,6 +38,6 @@ class Collector:
         return self.taskRepository[assetCategoryID.lower()]
 
     def collect(self, assetCategoryID):
-        compiledRecommendation = { "manual_link" : self.grabLink(), "task_list" : self.grabTasks(assetCategoryID) }
+        compiledRecommendation = { "manual_link" : self.grabLink(), "task_list" : self.grabTasks(assetCategoryID), "triggers" : self.triggers }
         return compiledRecommendation
         
