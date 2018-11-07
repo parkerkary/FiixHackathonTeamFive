@@ -17,6 +17,13 @@ class Collector:
             }
         }
 
+    triggers = [
+        "Meter Reading - 5000 (Miles)",
+        "Time Schedule - Every 2 (Months)",
+        "Event - Break down",
+        "Event - Puncture"
+    ]
+
     def __init__(self,carName):
         '''
         Constructor
