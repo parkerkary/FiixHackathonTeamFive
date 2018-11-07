@@ -15,11 +15,13 @@ app = Flask(__name__)
 def getConfidence():
     filename  = request.json["filename"]
     tfData = label_image.image_predict(filename)
-    prettyData = {}
+    newTf = []
     for x in tfData:
+        prettyData = {}
         prettyData["name"] = x["name"].title()
         prettyData["confindence"] = x["confidence"]
-    out = json.dumps(prettyData)
+        newTf.append(prettyData)
+    out = json.dumps(newTf)
     return Response(out, mimetype='application/json')
 
 @app.route('/recommend', methods=["POST"])
