@@ -7,7 +7,6 @@ from flask import Flask, request
 
 from agents import Collector
 from ai_model import label_image
-from model import models
 from Scraper.WebScraper import WebScraper
 
 app = Flask(__name__)
