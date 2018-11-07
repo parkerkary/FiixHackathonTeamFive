@@ -88,8 +88,8 @@ def image_predict(image):
 
     file_name = "/tmp/test.jpg"
 
-    model_file = "/Users/parkerkary/Dev/FiixHackathonTeamFive/python/ai_model/retrained_graph2.pb"
-    label_file = "/Users/parkerkary/Dev/FiixHackathonTeamFive/python/ai_model/retrained_labels2.txt"
+    model_file = "/FiixHackathonTeamFive/python/ai_model/retrained_graph2.pb"
+    label_file = "/FiixHackathonTeamFive/python/ai_model/retrained_labels2.txt"
     input_height = 299
     input_width = 299
     input_mean = 0
@@ -119,7 +119,7 @@ def image_predict(image):
     labels = load_labels(label_file)
 
     possibles = []
-    
+
     for i in top_k:
         outData = {}
         outData["name"] = labels[i]
