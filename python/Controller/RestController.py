@@ -19,7 +19,7 @@ def getConfidence():
     for x in tfData:
         prettyData = {}
         prettyData["name"] = x["name"].title()
-        prettyData["confindence"] = x["confidence"]
+        prettyData["confidence"] = x["confidence"]
         newTf.append(prettyData)
     out = json.dumps(newTf)
     return Response(out, mimetype='application/json')
