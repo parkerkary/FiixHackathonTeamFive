@@ -35,7 +35,7 @@ class Collector:
         return self.scraper.webpage
     
     def grabTasks(self, assetCategoryID):
-        return self.taskRepository[assetCategoryID]
+        return self.taskRepository[assetCategoryID.lower()]
 
     def collect(self, assetCategoryID):
         compiledRecommendation = { "manual_link" : self.grabLink(), "task_list" : self.grabTasks(assetCategoryID) }
