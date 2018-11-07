@@ -28,7 +28,7 @@ def getConfidence():
     tfData = callTensorFlow(content["filename"])
     return str(tfData)
 
-@app.route('/recommend', methods=["POST"])
+@app.route('/recommend/<carName>', methods=["POST"])
 def getRecommendations():
     collector = Collector.Collector()
-    return json.dumps(collector.collect(1))
+    return json.dumps(collector.collect(request.view_args['carName']))
