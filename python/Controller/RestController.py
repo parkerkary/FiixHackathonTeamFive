@@ -3,7 +3,7 @@ import random
 
 import numpy as np
 import requests
-from flask import Flask, request
+from flask import Flask, request, Response
 
 from agents import Collector
 from ai_model import label_image
@@ -16,10 +16,11 @@ def getConfidence():
     filename  = request.json["filename"]
     tfData = label_image.image_predict(filename)
     out = json.dumps(tfData)
-    return out
+    return Response(out, mimetype='application/json')
 
 @app.route('/recommend', methods=["POST"])
 def getRecommendations():
     carName = request.json["carname"]
     collector = Collector.Collector(carName)
-    return json.dumps(collector.collect(carName))
+    out =json.dumps(collector.collect(carName))
+    return Response(out, mimetype='application/json')
