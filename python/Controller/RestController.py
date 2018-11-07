@@ -1,30 +1,19 @@
-from flask import Flask, request
-import requests
-import random
-from Scraper.WebScraper import WebScraper
-from model import models
 import json
+import random
+
 import numpy as np
+import requests
+from flask import Flask, request
+
 from agents import Collector
+from ai_model import image_predict
+from model import models
+from Scraper.WebScraper import WebScraper
+
 app = Flask(__name__)
-sageMakerAddress = "http://127.0.0.1:5000/mock-sage-maker"
 
-Cars = models.keys()
-numCars = len(Cars)
-print(Cars)
-
-def callTensorFlow(content):
-    r = requests.post(sageMakerAddress,data=content)
-    j = json.loads(r.content)
-    numpyJ = np.array(j["data"])
-    largest = numpyJ.argsort()[-5:][::-1]
-    out = []
-    for x in largest:
-        obj = {}
-        obj["name"] = Cars[x]
-        obj["confidence"] = j["data"][x]
-        obj["models"] = models[Cars[x]]
-        out.append(obj)
+def callTensorFlow(filename):
+    out = image_predict(filename)
     return json.dumps(out)
     
 
@@ -36,16 +25,8 @@ def getLink(carName):
 @app.route('/call-tensor-flow', methods=["POST"])
 def getConfidence():
     content = request.json
-    tfData = callTensorFlow(content)
+    tfData = callTensorFlow(content["filename"])
     return str(tfData)
-
-# Mock
-@app.route('/mock-sage-maker', methods=["POST"])
-def getResults():
-    randoms = [random.randint(0,100) for x in range(numCars)]
-    _sum = float(sum(randoms))
-    out = { "data": [x/_sum for x in randoms]}
-    return json.dumps(out)
 
 @app.route('/recommend', methods=["POST"])
 def getRecommendations():

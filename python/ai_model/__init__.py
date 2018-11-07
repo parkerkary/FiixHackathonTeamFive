@@ -1,0 +1,2 @@
+from ai_model import label_image
+from label_image import image_predict
