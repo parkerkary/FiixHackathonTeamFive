@@ -16,7 +16,7 @@ def getConfidence():
     filename  = request.json["filename"]
     tfData = label_image.image_predict(filename)
     out = json.dumps(tfData)
-    return str(out)
+    return out
 
 @app.route('/recommend', methods=["POST"])
 def getRecommendations():
