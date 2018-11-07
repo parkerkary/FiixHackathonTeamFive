@@ -123,6 +123,6 @@ def image_predict(image):
     for i in top_k:
         outData = {}
         outData["name"] = labels[i]
-        outData["confidence"] = str(results[i])
+        outData["confidence"] = str(results[i] * 100)[:4] + "%"
         possibles.append(outData)
     return possibles
