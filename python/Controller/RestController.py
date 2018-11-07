@@ -6,7 +6,7 @@ import requests
 from flask import Flask, request
 
 from agents import Collector
-from ai_model import image_predict
+from ai_model import label_image
 from model import models
 from Scraper.WebScraper import WebScraper
 
@@ -15,7 +15,7 @@ app = Flask(__name__)
 @app.route('/call-tensor-flow', methods=["POST"])
 def getConfidence():
     filename  = request.json["filename"]
-    tfData = image_predict(filename)
+    tfData = label_image.image_predict(filename)
     out = json.dumps(tfData)
     return str(out)
 
