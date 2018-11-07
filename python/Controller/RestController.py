@@ -1,19 +1,16 @@
-from flask import Flask, request
-import requests
-import random
-from Scraper.WebScraper import WebScraper
-from model import models
 import json
+import random
+
 import numpy as np
+import requests
+from flask import Flask, request
+
 from agents import Collector
 from ai_model import image_predict
+from model import models
+from Scraper.WebScraper import WebScraper
 
 app = Flask(__name__)
-sageMakerAddress = "http://127.0.0.1:5000/mock-sage-maker"
-
-Cars = models.keys()
-numCars = len(Cars)
-print(Cars)
 
 def callTensorFlow(filename):
     out = image_predict(filename)
