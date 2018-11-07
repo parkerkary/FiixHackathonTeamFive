@@ -88,8 +88,8 @@ def image_predict(image):
 
     file_name = "/tmp/test.jpg"
 
-    model_file = "/FiixHackathonTeamFive/python/ai_model/retrained_graph2.pb"
-    label_file = "/FiixHackathonTeamFive/python/ai_model/retrained_labels2.txt"
+    model_file = "~/FiixHackathonTeamFive/python/ai_model/retrained_graph2.pb"
+    label_file = "~/FiixHackathonTeamFive/python/ai_model/retrained_labels2.txt"
     input_height = 299
     input_width = 299
     input_mean = 0
