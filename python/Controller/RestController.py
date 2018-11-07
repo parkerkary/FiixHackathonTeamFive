@@ -29,6 +29,6 @@ def getConfidence():
     return str(tfData)
 
 @app.route('/recommend/<carName>', methods=["POST"])
-def getRecommendations():
-    collector = Collector.Collector()
-    return json.dumps(collector.collect(request.view_args['carName']))
+def getRecommendations(carName):
+    collector = Collector.Collector(carName)
+    return json.dumps(collector.collect(carName))

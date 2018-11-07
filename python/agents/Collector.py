@@ -17,14 +17,15 @@ class Collector:
             }
         }
 
-    def __init__(self):
+    def __init__(self,carName):
         '''
         Constructor
         '''
+        
+        self.scraper = WebScraper(carName)
     
-    def grabLink(self, carName):
-        scraper = WebScraper(carName)
-        return scraper.webpage
+    def grabLink(self):
+        return self.scraper.webpage
     
     def grabTasks(self, assetCategoryID):
         return self.taskRepository[assetCategoryID]
