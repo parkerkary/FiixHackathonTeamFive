@@ -17,8 +17,8 @@ def getConfidence():
     tfData = label_image.image_predict(filename)
     prettyData = {}
     for x in tfData:
-        prettyData["name"] = tfData[x]["name"].title()
-        prettyData["confindence"] = tfData[x]["confidence"]
+        prettyData["name"] = x["name"].title()
+        prettyData["confindence"] = x["confidence"]
     out = json.dumps(prettyData)
     return Response(out, mimetype='application/json')
 
