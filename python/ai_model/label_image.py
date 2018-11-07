@@ -13,17 +13,15 @@
 # limitations under the License.
 # ==============================================================================
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
 import argparse
 
-import numpy as np
-import tensorflow as tf
-
 import boto3
 import botocore
+import numpy as np
+
+import tensorflow as tf
 
 BUCKET_NAME = 'maio-car-images'
 s3 = boto3.resource('s3')
@@ -151,5 +149,9 @@ def image_predict(image):
 
   top_k = results.argsort()[-5:][::-1]
   labels = load_labels(label_file)
+
+  outData = {}
   for i in top_k:
-    print(labels[i], results[i])
+    outData[labels[i]] = top_k[i]
+  
+  return outData
